@@ -1,0 +1,6 @@
+[submodule "subprojects/libRocket"]
+	path = subprojects/libRocket
+	url = https://github.com/libRocket/libRocket
+[submodule "subprojects/jngl"]
+	path = subprojects/jngl
+	url = https://github.com/jhasse/jngl
