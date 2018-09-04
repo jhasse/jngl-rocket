@@ -1,3 +1,5 @@
+#include "RocketJNGLRenderer.hpp"
+
 #include <jngl.hpp>
 
 #include <Rocket/Core.h>
@@ -5,23 +7,6 @@
 class RocketJNGLSystem : public Rocket::Core::SystemInterface {
 	float GetElapsedTime() override {
 		return jngl::getTime();
-	}
-};
-
-class RocketJNGLRenderer : public Rocket::Core::RenderInterface {
-public:
-	void RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices, int* indices,
-	                    int num_indices, Rocket::Core::TextureHandle texture,
-	                    const Rocket::Core::Vector2f& translation) override {
-		// TODO
-	}
-
-	void EnableScissorRegion(bool) override {
-		// TODO
-	}
-
-	void SetScissorRegion(int, int, int, int) override {
-		// TODO
 	}
 };
 
@@ -37,6 +22,12 @@ public:
 		context = Rocket::Core::CreateContext("main",
 		                                      Rocket::Core::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT));
 		assert(context != nullptr);
+
+		Rocket::Core::ElementDocument* document = context->LoadDocument(
+		    "subprojects/libRocket/Samples/tutorial/template/data/tutorial.rml");
+		assert(document != nullptr);
+		document->Show();
+		document->RemoveReference();
 	}
 
 	~Main() {
@@ -46,6 +37,7 @@ public:
 
 	void step() {
 	}
+
 	void draw() const {
 		jngl::print("Hallo Welt!", 10, 10);
 	}
