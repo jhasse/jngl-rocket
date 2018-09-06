@@ -39,10 +39,24 @@ public:
 		Rocket::Core::Shutdown();
 	}
 
-	void step() {
+	void step() override {
+		const auto mouse = jngl::getMousePos() +
+		                   jngl::Vec2(jngl::getScreenWidth() / 2, jngl::getScreenHeight() / 2);
+		context->ProcessMouseMove(mouse.x, mouse.y, 0);
+		std::pair<jngl::mouse::Button, int> mapping[3] = { { jngl::mouse::Left, 0 },
+			                                               { jngl::mouse::Right, 1 },
+			                                               { jngl::mouse::Middle, 2 } };
+		for (const auto& button : mapping) {
+			if (jngl::mousePressed(button.first)) {
+				context->ProcessMouseButtonDown(button.second, 0);
+			} else if (!jngl::mouseDown(button.first)) {
+				context->ProcessMouseButtonUp(button.second, 0);
+			}
+		}
+		context->Update();
 	}
 
-	void draw() const {
+	void draw() const override {
 		jngl::translate(-jngl::getScreenWidth() / 2, - jngl::getScreenHeight() / 2);
 		context->Render();
 		jngl::setFontColor(255, 255, 255);
