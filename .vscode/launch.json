@@ -10,7 +10,8 @@
 			"name": "Debug",
 			"program": "${workspaceFolder}/build/jngl-rocket",
 			"args": [],
-			"cwd": "${workspaceFolder}"
+			"cwd": "${workspaceFolder}",
+			"preLaunchTask": "build"
 		}
 	]
 }

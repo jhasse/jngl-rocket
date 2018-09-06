@@ -1,6 +1,11 @@
 #pragma once
 
 #include <Rocket/Core/RenderInterface.h>
+#include <memory>
+
+namespace jngl {
+class Sprite;
+}
 
 class RocketJNGLRenderer : public Rocket::Core::RenderInterface {
 public:
@@ -23,4 +28,7 @@ public:
 
 	bool GenerateTexture(Rocket::Core::TextureHandle&, const Rocket::Core::byte* source,
 	                     const Rocket::Core::Vector2i& sourceDimensions) override;
+
+private:
+	std::vector<std::unique_ptr<jngl::Sprite>> sprites;
 };

@@ -2,12 +2,37 @@
 
 #include <Rocket/Core.h>
 #include <iostream>
+#include <jngl.hpp>
 
-void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int num_vertices,
-                                        int* indices, int num_indices,
+void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numVertices,
+                                        int* indices, int numIndices,
                                         Rocket::Core::TextureHandle texture,
                                         const Rocket::Core::Vector2f& translation) {
-	std::cout << "num_vertices: " << num_vertices << std::endl;
+	assert(numVertices > 0 && numVertices % 4 == 0);
+	Rocket::Core::Vertex arr[4];
+	arr[0] = vertices[0];
+	arr[1] = vertices[1];
+	arr[2] = vertices[2];
+	arr[3] = vertices[3];
+	std::cout << "numVertices: " << numVertices << " texture: " << texture
+	          << " vertices[0].tex_coord: " << vertices[1].tex_coord.x
+	          << ", " << vertices[1].tex_coord.y << std::endl;
+	jngl::pushMatrix();
+	jngl::translate(translation);
+	jngl::translate(vertices[0].position);
+	const jngl::Sprite& sprite = *reinterpret_cast<const jngl::Sprite*>(texture);
+
+	jngl::scale((vertices[2].position.x - vertices[0].position.x) / sprite.getWidth() /
+	                (vertices[2].tex_coord.x - vertices[0].tex_coord.x),
+	            (vertices[2].position.y - vertices[0].position.y) / sprite.getWidth() /
+	                (vertices[2].tex_coord.y - vertices[0].tex_coord.y));
+
+	sprite.drawClipped({ vertices[0].tex_coord.x, vertices[0].tex_coord.y },
+	                   { vertices[2].tex_coord.x, vertices[2].tex_coord.y });
+	jngl::popMatrix();
+	if (numVertices > 4) {
+		RenderGeometry(vertices + 4, numVertices - 4, nullptr, 0, texture, translation);
+	}
 }
 
 bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle,
@@ -110,8 +135,12 @@ bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle
 	return success;
 }
 
-bool RocketJNGLRenderer::GenerateTexture(Rocket::Core::TextureHandle&,
+bool RocketJNGLRenderer::GenerateTexture(Rocket::Core::TextureHandle& handle,
                                          const Rocket::Core::byte* source,
                                          const Rocket::Core::Vector2i& sourceDimensions) {
-	return false; // TODO
+	sprites.emplace_back(
+	    std::make_unique<jngl::Sprite>(source, sourceDimensions.x, sourceDimensions.y));
+	sprites.back()->setPos(0, 0);
+	handle = reinterpret_cast<uintptr_t>(sprites.back().get());
+	return true;
 }

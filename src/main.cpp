@@ -24,10 +24,11 @@ public:
 		assert(context != nullptr);
 
 		Rocket::Core::ElementDocument* document = context->LoadDocument(
-		    "subprojects/libRocket/Samples/tutorial/template/data/tutorial.rml");
+		    "subprojects/libRocket/Samples/invaders/data/main_menu.rml");
 		assert(document != nullptr);
 		document->Show();
 		document->RemoveReference();
+		jngl::setBackgroundColor(0, 0, 0);
 	}
 
 	~Main() {
@@ -39,7 +40,10 @@ public:
 	}
 
 	void draw() const {
-		jngl::print("Hallo Welt!", 10, 10);
+		jngl::translate(-jngl::getScreenWidth() / 2, - jngl::getScreenHeight() / 2);
+		context->Render();
+		jngl::setFontColor(255, 255, 255);
+		jngl::print("Hello World from JNGL!", 100, 100);
 	}
 
 private:
