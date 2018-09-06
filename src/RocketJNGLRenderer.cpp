@@ -1,7 +1,6 @@
 #include "RocketJNGLRenderer.hpp"
 
 #include <Rocket/Core.h>
-#include <iostream>
 #include <jngl.hpp>
 
 void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numVertices,
@@ -14,9 +13,6 @@ void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
 	arr[1] = vertices[1];
 	arr[2] = vertices[2];
 	arr[3] = vertices[3];
-	std::cout << "numVertices: " << numVertices << " texture: " << texture
-	          << " vertices[0].tex_coord: " << vertices[1].tex_coord.x
-	          << ", " << vertices[1].tex_coord.y << std::endl;
 	jngl::pushMatrix();
 	jngl::translate(translation);
 	jngl::translate(vertices[0].position);
