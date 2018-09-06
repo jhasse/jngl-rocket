@@ -7,4 +7,4 @@ install:
   - brew install sdl2 freetype libvorbis libepoxy webp
 script:
   - cmake .
-  - make
+  - make -j$(nproc)

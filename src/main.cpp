@@ -23,6 +23,9 @@ public:
 		                                      Rocket::Core::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT));
 		assert(context != nullptr);
 
+		Rocket::Core::FontDatabase::LoadFontFace(
+		    "subprojects/libRocket/Samples/assets/Delicious-Roman.otf");
+
 		Rocket::Core::ElementDocument* document = context->LoadDocument(
 		    "subprojects/libRocket/Samples/invaders/data/main_menu.rml");
 		assert(document != nullptr);
