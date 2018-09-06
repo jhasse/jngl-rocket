@@ -1,0 +1,12 @@
+language: cpp
+os:
+- osx
+compiler:
+  - clang
+install:
+  - brew update
+  - brew outdated jpeg || brew upgrade jpeg
+  - brew install sdl2 freetype libvorbis libepoxy jpeg webp cmake
+script:
+  - cmake .
+  - make
