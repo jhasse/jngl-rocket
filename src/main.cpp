@@ -43,14 +43,13 @@ public:
 		const auto mouse = jngl::getMousePos() +
 		                   jngl::Vec2(jngl::getScreenWidth() / 2, jngl::getScreenHeight() / 2);
 		context->ProcessMouseMove(mouse.x, mouse.y, 0);
-		std::pair<jngl::mouse::Button, int> mapping[3] = { { jngl::mouse::Left, 0 },
-			                                               { jngl::mouse::Right, 1 },
-			                                               { jngl::mouse::Middle, 2 } };
-		for (const auto& button : mapping) {
-			if (jngl::mousePressed(button.first)) {
-				context->ProcessMouseButtonDown(button.second, 0);
-			} else if (!jngl::mouseDown(button.first)) {
-				context->ProcessMouseButtonUp(button.second, 0);
+		for (auto& button : mapping) {
+			if (jngl::mousePressed(button.jngl)) {
+				context->ProcessMouseButtonDown(button.rocket, 0);
+				button.down = true;
+			} else if (!jngl::mouseDown(button.jngl) and button.down) {
+				context->ProcessMouseButtonUp(button.rocket, 0);
+				button.down = false;
 			}
 		}
 		context->Update();
@@ -67,6 +66,15 @@ private:
 	RocketJNGLSystem system;
 	RocketJNGLRenderer renderer;
 	Rocket::Core::Context* context = nullptr;
+
+	struct MouseButton {
+		jngl::mouse::Button jngl;
+		int rocket;
+		bool down = false;
+	};
+	MouseButton mapping[3] = { { jngl::mouse::Left, 0 },
+		                       { jngl::mouse::Right, 1 },
+		                       { jngl::mouse::Middle, 2 } };
 };
 
 JNGL_MAIN_BEGIN {
