@@ -16,6 +16,8 @@ void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
 	jngl::pushMatrix();
 	jngl::translate(translation);
 	jngl::translate(vertices[0].position);
+
+	assert(texture != 0);
 	const jngl::Sprite& sprite = *reinterpret_cast<const jngl::Sprite*>(texture);
 
 	jngl::scale((vertices[2].position.x - vertices[0].position.x) / sprite.getWidth() /
@@ -34,6 +36,16 @@ void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
 bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle,
                                      Rocket::Core::Vector2i& texture_dimensions,
                                      const Rocket::Core::String& source) {
+
+	if (source.Length() >= 4 and source.Substring(source.Length() - 4, 4) != ".tga") {
+		sprites.emplace_back(std::make_unique<jngl::Sprite>(source.CString()));
+		texture_dimensions.x = sprites.back()->getWidth();
+		texture_dimensions.y = sprites.back()->getHeight();
+		sprites.back()->setPos(0, 0);
+		texture_handle = reinterpret_cast<uintptr_t>(sprites.back().get());
+		return true;
+	}
+
 	// Code taken from libRocket's ShellRenderInterfaceOpenGL::LoadTexture
 
 	Rocket::Core::FileInterface* file_interface = Rocket::Core::GetFileInterface();
