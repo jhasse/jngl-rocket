@@ -22,7 +22,7 @@ void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
 
 	jngl::scale((vertices[2].position.x - vertices[0].position.x) / sprite.getWidth() /
 	                (vertices[2].tex_coord.x - vertices[0].tex_coord.x),
-	            (vertices[2].position.y - vertices[0].position.y) / sprite.getWidth() /
+	            (vertices[2].position.y - vertices[0].position.y) / sprite.getHeight() /
 	                (vertices[2].tex_coord.y - vertices[0].tex_coord.y));
 
 	sprite.drawClipped({ vertices[0].tex_coord.x, vertices[0].tex_coord.y },
