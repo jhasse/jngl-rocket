@@ -8,3 +8,7 @@ add_executable(jngl-rocket ${SRC})
 
 target_link_libraries(jngl-rocket jngl RocketCore)
 target_include_directories(jngl-rocket PRIVATE subprojects/libRocket/Include)
+
+if(NOT BUILD_SHARED_LIBS)
+	target_compile_definitions(jngl-rocket PRIVATE ROCKET_STATIC_LIB)
+endif()
