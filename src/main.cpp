@@ -78,7 +78,8 @@ private:
 };
 
 JNGL_MAIN_BEGIN {
+	jngl::App app("JNGL+libRocket");
 	jngl::showWindow("JNGL+libRocket", WINDOW_WIDTH, WINDOW_HEIGHT, false);
 	jngl::setWork(std::make_shared<Main>());
-	jngl::mainLoop();
+	app.mainLoop();
 } JNGL_MAIN_END
