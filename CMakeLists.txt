@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
+project(jngl-rocket)
 
 add_subdirectory("subprojects/jngl")
 add_subdirectory("subprojects/libRocket/Build")
