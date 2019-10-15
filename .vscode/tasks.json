@@ -7,6 +7,13 @@
 		],
 		"command": "/bin/bash"
 	},
+	"windows": {
+		"args": [
+			"-lc",
+			"ninja -Cbuild"
+		],
+		"command": "C:/msys64/usr/bin/bash.exe"
+	},
 	"options": {
 		"env": {
 			"LANG": "C.UTF-8",
