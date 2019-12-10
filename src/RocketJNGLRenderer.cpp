@@ -4,7 +4,7 @@
 #include <jngl.hpp>
 
 void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numVertices,
-                                        int* indices, int numIndices,
+                                        int* /*indices*/, int /*numIndices*/,
                                         Rocket::Core::TextureHandle texture,
                                         const Rocket::Core::Vector2f& translation) {
 	assert(numVertices > 0 && numVertices % 4 == 0);
