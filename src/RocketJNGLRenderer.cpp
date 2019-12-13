@@ -1,14 +1,14 @@
 #include "RocketJNGLRenderer.hpp"
 
-#include <Rocket/Core.h>
+#include <RmlUi/Core.h>
 #include <jngl.hpp>
 
-void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numVertices,
+void RocketJNGLRenderer::RenderGeometry(Rml::Core::Vertex* vertices, int numVertices,
                                         int* /*indices*/, int /*numIndices*/,
-                                        Rocket::Core::TextureHandle texture,
-                                        const Rocket::Core::Vector2f& translation) {
+                                        Rml::Core::TextureHandle texture,
+                                        const Rml::Core::Vector2f& translation) {
 	assert(numVertices > 0 && numVertices % 4 == 0);
-	Rocket::Core::Vertex arr[4];
+	Rml::Core::Vertex arr[4];
 	arr[0] = vertices[0];
 	arr[1] = vertices[1];
 	arr[2] = vertices[2];
@@ -33,12 +33,12 @@ void RocketJNGLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int numV
 	}
 }
 
-bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle,
-                                     Rocket::Core::Vector2i& texture_dimensions,
-                                     const Rocket::Core::String& source) {
+bool RocketJNGLRenderer::LoadTexture(Rml::Core::TextureHandle& texture_handle,
+                                     Rml::Core::Vector2i& texture_dimensions,
+                                     const Rml::Core::String& source) {
 
-	if (source.Length() >= 4 and source.Substring(source.Length() - 4, 4) != ".tga") {
-		sprites.emplace_back(std::make_unique<jngl::Sprite>(source.CString()));
+	if (source.size() >= 4 and source.substr(source.size() - 4, 4) != ".tga") {
+		sprites.emplace_back(std::make_unique<jngl::Sprite>(source.c_str()));
 		texture_dimensions.x = sprites.back()->getWidth();
 		texture_dimensions.y = sprites.back()->getHeight();
 		sprites.back()->setPos(0, 0);
@@ -48,8 +48,8 @@ bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle
 
 	// Code taken from libRocket's ShellRenderInterfaceOpenGL::LoadTexture
 
-	Rocket::Core::FileInterface* file_interface = Rocket::Core::GetFileInterface();
-	Rocket::Core::FileHandle file_handle = file_interface->Open(source);
+	Rml::Core::FileInterface* file_interface = Rml::Core::GetFileInterface();
+	Rml::Core::FileHandle file_handle = file_interface->Open(source);
 	if (!file_handle) {
 		return false;
 	}
@@ -78,7 +78,7 @@ bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle
 // Restore packing
 #pragma pack()
 
-	ROCKET_ASSERTMSG(
+	RMLUI_ASSERTMSG(
 	    buffer_size > sizeof(TGAHeader),
 	    "Texture file size is smaller than TGAHeader, file must be corrupt or otherwise invalid");
 	if (buffer_size <= sizeof(TGAHeader)) {
@@ -97,15 +97,15 @@ bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle
 	int image_size = header.width * header.height * 4; // We always make 32bit textures
 
 	if (header.dataType != 2) {
-		Rocket::Core::Log::Message(Rocket::Core::Log::LT_ERROR,
-		                           "Only 24/32bit uncompressed TGAs are supported.");
+		Rml::Core::Log::Message(Rml::Core::Log::LT_ERROR,
+		                        "Only 24/32bit uncompressed TGAs are supported.");
 		return false;
 	}
 
 	// Ensure we have at least 3 colors
 	if (color_mode < 3) {
-		Rocket::Core::Log::Message(Rocket::Core::Log::LT_ERROR,
-		                           "Only 24 and 32bit textures are supported");
+		Rml::Core::Log::Message(Rml::Core::Log::LT_ERROR,
+		                        "Only 24 and 32bit textures are supported");
 		return false;
 	}
 
@@ -143,9 +143,9 @@ bool RocketJNGLRenderer::LoadTexture(Rocket::Core::TextureHandle& texture_handle
 	return success;
 }
 
-bool RocketJNGLRenderer::GenerateTexture(Rocket::Core::TextureHandle& handle,
-                                         const Rocket::Core::byte* source,
-                                         const Rocket::Core::Vector2i& sourceDimensions) {
+bool RocketJNGLRenderer::GenerateTexture(Rml::Core::TextureHandle& handle,
+                                         const Rml::Core::byte* source,
+                                         const Rml::Core::Vector2i& sourceDimensions) {
 	sprites.emplace_back(
 	    std::make_unique<jngl::Sprite>(source, sourceDimensions.x, sourceDimensions.y));
 	sprites.back()->setPos(0, 0);
