@@ -29,7 +29,7 @@ public:
 		    context->LoadDocument("subprojects/RmlUi/Samples/invaders/data/main_menu.rml");
 		assert(document != nullptr);
 		document->Show();
-		jngl::setBackgroundColor(0, 0, 0);
+		jngl::setBackgroundColor(0x000000_rgb);
 	}
 
 	~Main() {
