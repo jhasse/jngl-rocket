@@ -4,7 +4,7 @@
 
 #include <RmlUi/Core.h>
 
-class RocketJNGLSystem : public Rml::Core::SystemInterface {
+class RocketJNGLSystem : public Rml::SystemInterface {
 	double GetElapsedTime() override {
 		return jngl::getTime();
 	}
@@ -16,16 +16,16 @@ const int WINDOW_HEIGHT = 768;
 class Main : public jngl::Work {
 public:
 	Main() {
-		Rml::Core::SetSystemInterface(&system);
-		Rml::Core::SetRenderInterface(&renderer);
-		Rml::Core::Initialise();
+		Rml::SetSystemInterface(&system);
+		Rml::SetRenderInterface(&renderer);
+		Rml::Initialise();
 		context =
-		    Rml::Core::CreateContext("main", Rml::Core::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT));
+		    Rml::CreateContext("main", Rml::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT));
 		assert(context != nullptr);
 
-		Rml::Core::LoadFontFace("subprojects/RmlUi/Samples/assets/Delicious-Roman.otf");
+		Rml::LoadFontFace("subprojects/RmlUi/Samples/assets/Delicious-Roman.otf");
 
-		Rml::Core::ElementDocument* document =
+		Rml::ElementDocument* document =
 		    context->LoadDocument("subprojects/RmlUi/Samples/invaders/data/main_menu.rml");
 		assert(document != nullptr);
 		document->Show();
@@ -33,7 +33,7 @@ public:
 	}
 
 	~Main() {
-		Rml::Core::Shutdown();
+		Rml::Shutdown();
 	}
 
 	void step() override {
@@ -62,7 +62,7 @@ public:
 private:
 	RocketJNGLSystem system;
 	RocketJNGLRenderer renderer;
-	Rml::Core::Context* context = nullptr;
+	Rml::Context* context = nullptr;
 
 	struct MouseButton {
 		jngl::mouse::Button jngl;
