@@ -23,7 +23,10 @@ public:
 		    Rml::CreateContext("main", Rml::Vector2i(WINDOW_WIDTH, WINDOW_HEIGHT));
 		assert(context != nullptr);
 
-		Rml::LoadFontFace("subprojects/RmlUi/Samples/assets/Delicious-Roman.otf");
+		const std::string fontFile = "subprojects/RmlUi/Samples/assets/LatoLatin-Regular.ttf";
+		if (!Rml::LoadFontFace(fontFile)) {
+			throw std::runtime_error("Failed to load font: " + fontFile);
+		}
 
 		Rml::ElementDocument* document =
 		    context->LoadDocument("subprojects/RmlUi/Samples/invaders/data/main_menu.rml");
@@ -75,8 +78,8 @@ private:
 };
 
 JNGL_MAIN_BEGIN {
-	jngl::App app("JNGL+libRocket");
-	jngl::showWindow("JNGL+libRocket", WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	jngl::App app("JNGL+RmlUi");
+	jngl::showWindow("JNGL+RmlUi", WINDOW_WIDTH, WINDOW_HEIGHT, false);
 	jngl::setWork(std::make_shared<Main>());
 	app.mainLoop();
 } JNGL_MAIN_END
