@@ -17,6 +17,8 @@
 	"options": {
 		"env": {
 			"LANG": "C.UTF-8",
+			"MSYSTEM": "MINGW64",
+			"CHERE_INVOKING": "1"
 		}
 	},
 	"tasks": [

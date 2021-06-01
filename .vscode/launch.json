@@ -12,6 +12,25 @@
 			"args": [],
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "build"
-		}
+		},
+		{
+            "name": "(lldb) Launch MS Plugin",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/jngl-rocket",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "osx":{
+                "MIMode": "lldb"
+            },
+            "preLaunchTask": "build",
+            "windows": {
+                "miDebuggerPath": "C:/tools/msys64/mingw64/bin/gdb.exe",
+            }
+        },
 	]
 }
