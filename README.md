@@ -9,3 +9,9 @@ make -j8
 cd ..
 ./build/jngl-rocket
 ```
+
+## Windows (MinGW)
+
+```sh
+ cmake -Bbuild -GNinja -DBUILD_SHARED_LIBS=0
+ ```
