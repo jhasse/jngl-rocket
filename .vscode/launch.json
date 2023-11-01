@@ -8,7 +8,7 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "${workspaceFolder}/build/jngl-rocket",
+			"program": "${workspaceFolder}/build/Debug/jngl-rocket",
 			"args": [],
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "build"

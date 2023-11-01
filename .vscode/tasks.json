@@ -8,11 +8,7 @@
 		"command": "/bin/bash"
 	},
 	"windows": {
-		"args": [
-			"-lc",
-			"ninja -Cbuild"
-		],
-		"command": "C:/msys64/usr/bin/bash.exe"
+		"command": ".vscode/build.bat"
 	},
 	"options": {
 		"env": {

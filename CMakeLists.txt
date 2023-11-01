@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.6)
 project(jngl-rocket)
 
+if(MSVC)
+	add_compile_options(/permissive-)
+endif()
+
 add_subdirectory("subprojects/jngl")
 add_subdirectory("subprojects/RmlUi")
 
