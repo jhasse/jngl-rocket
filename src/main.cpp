@@ -1,6 +1,8 @@
 #include "RocketJNGLRenderer.hpp"
 
+#include <cassert>
 #include <jngl.hpp>
+#include <jngl/init.hpp>
 
 #include <RmlUi/Core.h>
 
@@ -77,9 +79,12 @@ private:
 		                       { jngl::mouse::Middle, 2 } };
 };
 
-JNGL_MAIN_BEGIN {
-	jngl::App app("JNGL+RmlUi");
-	jngl::showWindow("JNGL+RmlUi", WINDOW_WIDTH, WINDOW_HEIGHT, false);
-	jngl::setWork(std::make_shared<Main>());
-	app.mainLoop();
-} JNGL_MAIN_END
+jngl::AppParameters jnglInit() {
+	jngl::AppParameters params;
+	params.displayName = "JNGL+RmlUi";
+	params.screenSize = { WINDOW_WIDTH, WINDOW_HEIGHT };
+	params.start = []() {
+		return std::make_shared<Main>();
+	};
+	return params;
+}
